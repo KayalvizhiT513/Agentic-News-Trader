@@ -1,0 +1,15 @@
+
+services:
+  news_fetcher:
+    build: ./news_fetcher
+    env_file: [.env]
+    volumes: ["./data:/data"]
+  sentiment:
+    build: ./sentiment
+    env_file: [.env]
+    volumes: ["./data:/data"]
+    depends_on: [news_fetcher]
+  trader:
+    build: ./trader
+    volumes: ["./data:/data"]
+    depends_on: [sentiment]
